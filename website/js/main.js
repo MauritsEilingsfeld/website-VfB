@@ -1,5 +1,22 @@
 let alle_bundesliga_ergebnisse = null
 
+let zaehler_fuer_siege = 0
+
+let zaehler_fuer_Unentschieden = 0
+
+let zaehler_fuer_niederlagen = 0
+
+let zaehler_fuer_tore_von_vfb = 0
+
+
+
+let zaehler_fuer_gewonnene_spiele = 0
+
+let zaehler_fuer_Unentschiede_spiele = 0
+
+let zaehler_fuer_verlorene_spiele = 0
+
+let zaehler_fuer_vfb_spiele = 0
 
 fetch('https://www.openligadb.de/api/getmatchdata/bl2/2019')
     .then((response) => {
@@ -7,8 +24,20 @@ fetch('https://www.openligadb.de/api/getmatchdata/bl2/2019')
     })
     .then((myJson) => {
         alle_bundesliga_ergebnisse = myJson
-        console.log(alle_bundesliga_ergebnisse);
+        // console.log(alle_bundesliga_ergebnisse);
         abruf_der_spiele()
+        console.log("Tore bei Siegen:\t\t\t\t" + zaehler_fuer_siege)
+        console.log("Tore bei Unentschieden:\t\t\t" + zaehler_fuer_Unentschieden)
+        console.log("Tore bei niederlagen\t\t\t" + zaehler_fuer_niederlagen)
+        console.log("Gesamtanzahl Tore:\t\t\t\t" + zaehler_fuer_tore_von_vfb)
+        console.log('\n')
+        console.log("Gespielte Partien:\t\t\t\t" + zaehler_fuer_vfb_spiele)
+        console.log('\n')
+        console.log("Punkte bei Siegen:\t\t\t\t" + zaehler_fuer_gewonnene_spiele)
+        console.log("Punkte bei Unentschieden:\t\t" + zaehler_fuer_Unentschiede_spiele)
+        console.log("Verlorene Spiele:\t\t\t\t" + zaehler_fuer_verlorene_spiele)
+        ergebnis = zaehler_fuer_gewonnene_spiele + zaehler_fuer_Unentschiede_spiele
+        console.log("Gesamtanzahl Punkte:\t\t\t" + ergebnis)
     });
 
 
@@ -37,7 +66,7 @@ function abruf_der_spiele() {
         aktuelle_matchid = einzelnes_spiel['MatchID']
 
         aktuelle_spielergebnisse = einzelnes_spiel['MatchResults']
-        console.log(aktuelle_spielergebnisse);
+        // console.log(aktuelle_spielergebnisse);
         endergebnis = aktuelle_spielergebnisse[0]
 
         team1 = bestimme_namen_beider_teams(einzelnes_spiel)
@@ -63,23 +92,7 @@ function abruf_der_spiele() {
 
         spielendergebnis = bestimme_endergebnis_aus_liste_mit_toren(alle_aktuellen_tore_als_liste)
 
-        zaehler_fuer_siege = 0
 
-        zaehler_fuer_Unentschieden = 0
-
-        zaehler_fuer_niederlagen = 0
-
-        zaehler_fuer_tore_von_vfb = 0
-
-
-
-        zaehler_fuer_gewonnene_spiele = 0
-
-        zaehler_fuer_Unentschiede_spiele = 0
-
-        zaehler_fuer_verlorene_spiele = 0
-
-        zaehler_fuer_vfb_spiele = 0
 
         tor = {}
 
@@ -93,7 +106,7 @@ function abruf_der_spiele() {
         let o = bestimme_namen_beider_teams(spiel)
         team1 = o.first
         team2 = o.second
-        if (team1 == "VfB Stuttgart" || team2 == "VfB stuttgart") {
+        if (team1 === "VfB Stuttgart" || team2 === "VfB stuttgart") {
             console.log(team1 + " Spielt gegen " + team2)
 
             spiel_tor_liste = spiel['Goals']
@@ -103,158 +116,166 @@ function abruf_der_spiele() {
             aktuelles_Datum = "2020-01-23T08:30:00"
             if (aktuelles_Datum < zeitpunkt_des_spiels) {
                 console.log("Das Spiel wurde noch nicht gespielt");
-            } else console.log("Das Spiel hat am " + zeitpunkt_des_spiels + " stattgefunden.");
-            if (spiel_tor_liste.length == 0) {
-                console.log("Spiel ist 0:0 ausgegangen.");
             } else {
-                erstes_geschossenes_tor = spiel_tor_liste[0]
-                console.log(erstes_geschossenes_tor);
+                console.log("Das Spiel hat am " + zeitpunkt_des_spiels + " stattgefunden.");
+                if (spiel_tor_liste.length === 0) {
+                    console.log("Spiel ist 0:0 ausgegangen.");
+                } else {
+                    erstes_geschossenes_tor = spiel_tor_liste[0]
+                    console.log(erstes_geschossenes_tor);
+                }
+
+                team1 = bestimme_namen_beider_teams(spiel)
+                team2 = bestimme_namen_beider_teams(spiel)
+
+                spiel_tor_liste.forEach((tor) => {
+                    console.log("Ein Tor ist gefallen")
+                    team1_tore = tor['ScoreTeam1']
+                    team2_tore = tor['ScoreTeam2']
+                    console.log('H: ' + (team1_tore))
+                    console.log('A: ' + (team2_tore))
+                })
+
+                let liste_mit_spielergebnissen = spiel['MatchResults']
+                console.log(liste_mit_spielergebnissen)
+                endspielergebnis = liste_mit_spielergebnissen
+                console.log(endergebnis)
+                PointsTeam1 = endspielergebnis['PointsTeam1']
+                PointsTeam2 = endspielergebnis['PointsTeam2']
+                if (team1 === "VfB Stuttgart" || team2 === "VfB Stuttgart") {
+                    console.log("Heim:" + PointsTeam1 + " Auswerts:" + PointsTeam2)
+                    spiel_tor_liste = spiel['Goals']
+                    console.log(spiel_tor_liste)
+                    spiel_tor_liste = spiel['Goals']
+                    console.log("Liste mit Toren aus dem Spiel" + spiel_tor_liste)
+                }
+
+                if (team1_tore > team2_tore) {
+                    if (team1 === "VfB Stuttgart") {
+                        console.log("VfB Tore bei Sieg:" + team1_tore)
+                        zaehler_fuer_siege = zaehler_fuer_siege + team1_tore
+
+                        zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
+                        console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                    }
+                }
+
+                if (team1_tore < team2_tore) {
+                    if (team2 === "VfB Stuttgart") {
+                        console.log("VfB Tore bei Sieg:" + team2_tore)
+                        zaehler_fuer_siege = zaehler_fuer_siege + team2_tore
+
+                        zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
+                        console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                    }
+                }
+
+
+
+
+
+                if (team1_tore === team2_tore) {
+                    if (team2 === "VfB Stuttgart") {
+                        console.log("VfB Tore bei Unentschieden:" + team2_tore)
+                        zaehler_fuer_siege = zaehler_fuer_Unentschieden + team2_tore
+
+
+
+                        zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
+                        console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                    }
+                }
+                if (team1_tore === team2_tore) {
+                    if (team1 === "VfB Stuttgart") {
+                        console.log("VfB Tore bei Unentschieden:" + team1_tore)
+                        zaehler_fuer_siege = zaehler_fuer_Unentschieden + team1_tore
+                        zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
+                        console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                    }
+                }
+
+
+
+                if (team1_tore < team2_tore) {
+                    if (team1 === "VfB Stuttgart")
+                        console.log("VfB Tore bei Niederlage:" + team1_tore)
+                    zaehler_fuer_niederlagen = zaehler_fuer_niederlagen + team1_tore
+
+                    zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
+                    console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                }
+
+                if (team1_tore > team2_tore) {
+                    if (team2 === "VfB Stuttgart")
+                        console.log("VfB Tore bei Niederlage:" + team2_tore)
+                    zaehler_fuer_niederlagen = zaehler_fuer_niederlagen + team2_tore
+
+                    zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
+                    console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
+                }
+
+
+
+                if (team1_tore > team2_tore) {
+                    if (team1 === "VfB Stuttgart")
+                        console.log("VfB hat gewonnen")
+                    zaehler_fuer_gewonnene_spiele = zaehler_fuer_gewonnene_spiele + 3
+                    console.log("Gewonnene Spiele:" + zaehler_fuer_gewonnene_spiele)
+                }
+
+                if (team1_tore < team2_tore) {
+                    if (team1 === "VfB Stuttgart")
+                        console.log("VfB hat gewonnen")
+                    zaehler_fuer_gewonnene_spiele = zaehler_fuer_gewonnene_spiele + 3
+                    console.log("Gewonnene Spiele:" + zaehler_fuer_gewonnene_spiele)
+                }
+
+
+
+                if (team1_tore === team2_tore) {
+                    if (team1 === "VfB Stuttgart")
+                        console.log("VfB hat Unentschieden gespielt")
+                    zaehler_fuer_Unentschiede_spiele = zaehler_fuer_Unentschiede_spiele + 1
+                    console.log("Unentschiedene Spiele:" + zaehler_fuer_Unentschiede_spiele)
+                }
+
+                if (team1_tore === team2_tore) {
+                    if (team2 === "VfB Stuttgart")
+                        console.log("VfB hat Unentschieden gespielt")
+                    zaehler_fuer_Unentschiede_spiele = zaehler_fuer_Unentschiede_spiele + 1
+                    console.log("Unentschiedene Spiele:" + zaehler_fuer_Unentschiede_spiele)
+                }
+
+
+
+
+                if (team1_tore < team2_tore) {
+                    if (team1 === "VfB Stuttgart")
+                        console.log("VfB hat verloren")
+                    zaehler_fuer_verlorene_spiele = zaehler_fuer_verlorene_spiele + 1
+                    console.log("Verlorene Spiele:" + zaehler_fuer_verlorene_spiele)
+                }
+
+                if (team1_tore > team2_tore) {
+                    if (team2 === "VfB Stuttgart")
+                        console.log("VfB hat verloren")
+                    zaehler_fuer_verlorene_spiele = zaehler_fuer_verlorene_spiele + 1
+                    console.log("Verlorene Spiele:" + zaehler_fuer_verlorene_spiele)
+                }
+
+
+
+
+                if (team1 === "VfB Stuttgart" || team2 === "VfB Stuttgart") {
+                    zaehler_fuer_vfb_spiele = zaehler_fuer_vfb_spiele + 1
+                }
+                console.log("Gespielte Partien:" + zaehler_fuer_vfb_spiele)
+                console.log()
             }
-
-            team1 = bestimme_namen_beider_teams(spiel)
-            team2 = bestimme_namen_beider_teams(spiel)
-
-            spiel_tor_liste.forEach((tor) => {
-                console.log("Ein Tor ist gefallen")
-                team1_tore = tor['ScoreTeam1']
-                team2_tore = tor['ScoreTeam2']
-                console.log('H: ' + (team1_tore))
-                console.log('A: ' + (team2_tore))
-            })
-
-            let liste_mit_spielergebnissen = spiel['MatchResults']
-            console.log(liste_mit_spielergebnissen)
-            endspielergebnis = liste_mit_spielergebnissen
-            console.log(endergebnis)
-            PointsTeam1 = endspielergebnis['PointsTeam1']
-            PointsTeam2 = endspielergebnis['PointsTeam2']
-            if (team1 == "VfB Stuttgart" || team2 == "VfB Stuttgart"){
-            console.log("Heim:" + PointsTeam1 + " Auswerts:" + PointsTeam2)
-            spiel_tor_liste = spiel['Goals']
-            console.log(spiel_tor_liste)
-            spiel_tor_liste = spiel['Goals']
-            console.log("Liste mit Toren aus dem Spiel" + spiel_tor_liste)
-            }
-
-            if (team1_tore > team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Sieg:" + team1_tore)
-                 zaehler_fuer_siege = zaehler_fuer_siege + team1_tore
- 
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
-                 console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-            }
-
-            if (team1_tore < team2_tore){
-                 if (team2 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Sieg:" + team2_tore)
-                 zaehler_fuer_siege = zaehler_fuer_siege + team2_tore
-
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
-                 console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-            }
-
-
-
-
-
-            if (team1_tore == team2_tore){
-                 if (team2 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Unentschieden:" + team1_tore)
-                 zaehler_fuer_siege = zaehler_fuer_Unentschieden + team1_tore
-            }
-
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
-                 console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-
-            if (team1_tore == team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Unentschieden:" + team2_tore)
-                 zaehler_fuer_siege = zaehler_fuer_Unentschieden + team2_tore
-
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
-                  console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-            }
-
-
-
-            if (team1_tore < team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Niederlage:" + team1_tore)
-                 zaehler_fuer_niederlagen = zaehler_fuer_niederlagen + team1_tore
-
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team1_tore
-                 console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-            }
-
-            if (team1_tore > team2_tore){
-                 if (team2 == "VfB Stuttgart")
-                 console.log("VfB Tore bei Niederlage:" + team2_tore)
-                 zaehler_fuer_niederlagen = zaehler_fuer_niederlagen + team2_tore
- 
-                 zaehler_fuer_tore_von_vfb = zaehler_fuer_tore_von_vfb + team2_tore
-                console.log("Tore Insgesamt:" + zaehler_fuer_tore_von_vfb)
-            }
-
-
-
-            if (team1_tore > team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB hat gewonnen")
-                 zaehler_fuer_gewonnene_spiele = zaehler_fuer_gewonnene_spiele + 3
-                 console.log("Gewonnene Spiele:" + zaehler_fuer_gewonnene_spiele)
-            }
-
-            if (team1_tore < team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB hat gewonnen")
-                 zaehler_fuer_gewonnene_spiele = zaehler_fuer_gewonnene_spiele + 3
-                 console.log("Gewonnene Spiele:" + zaehler_fuer_gewonnene_spiele)
-            }
-
-
-
-            if (team1_tore == team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB hat Unentschieden gespielt")
-                 zaehler_fuer_Unentschiede_spiele = zaehler_fuer_Unentschiede_spiele + 1
-                 console.log("Unentschiedene Spiele:" + zaehler_fuer_Unentschiede_spiele)
-            }
-
-            if (team1_tore == team2_tore){
-                 if (team2 == "VfB Stuttgart")
-                 console.log("VfB hat Unentschieden gespielt")
-                 zaehler_fuer_Unentschiede_spiele = zaehler_fuer_Unentschiede_spiele + 1
-                 console.log("Unentschiedene Spiele:" + zaehler_fuer_Unentschiede_spiele)
-            }
-        
-
-
-
-            if (team1_tore < team2_tore){
-                 if (team1 == "VfB Stuttgart")
-                 console.log("VfB hat verloren")
-                 zaehler_fuer_verlorene_spiele = zaehler_fuer_verlorene_spiele + 1
-                 console.log("Verlorene Spiele:" + zaehler_fuer_verlorene_spiele)
-            }
-
-            if (team1_tore > team2_tore){
-                 if (team2 == "VfB Stuttgart")
-                 console.log("VfB hat verloren")
-                 zaehler_fuer_verlorene_spiele = zaehler_fuer_verlorene_spiele + 1
-                 console.log("Verlorene Spiele:" + zaehler_fuer_verlorene_spiele)
-            }
-
-
-
-
-            if (team1 == "VfB Stuttgart" || team2 == "VfB Stuttgart"){
-            zaehler_fuer_vfb_spiele = zaehler_fuer_vfb_spiele + 1
-            }
-            console.log("Gespielte Partien:" + zaehler_fuer_vfb_spiele)
-            console.log()
         }
     })
+
+
 
 }
 
