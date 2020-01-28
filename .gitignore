@@ -112,5 +112,5 @@ dmypy.json
 .XDK
 .XDK/*
 
-.venv
-.venv/*
+venv
+venv/*
