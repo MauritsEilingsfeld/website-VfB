@@ -2,30 +2,43 @@
     content: "";
     display: table;
     clear: both;
-    padding: 6%
-
-
+    padding: 6%;
 }
+
 .column-Punkte{
     float: LEFT;
     width: 13%;
-    padding-left: 15%; 
-    padding-top: 10%
+    padding-left: 12%; 
+    padding-top: 10%;
+    padding-right: 2%;
 }
 .column-Tore{
     float: left;
     width: 13%;
-    padding: 10%;
-    padding-left: 0%; 
+    padding-top: 10%;
+    padding-right: 10%;
+    padding-left: 2%;
 }
 
 .center-column{
     float: left;
-    width: 40%;
+    width: 42%;
     padding-top: 8%;
 
 }
+body { 
+    /* background-color: gray; */
+    background-image: url("https://www.nebelung.de/wp-content/uploads/2018/05/Rasen-fit-machen-zur-Fu%C3%9Fball-Weltmeisterschaft.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
-.demo1 { background-image: url("rzSwvNx80HcSgM");
- }
+/* .demo1 {
+    background-color: gray;
+} */
+
+/* .demo1 { background-image: url("cMsfqSghOkd8BM")} */
+
+/* .demo1 { background-image: url("https://www.google.com/search?client=firefox-b-d&biw=1920&bih=966&tbm=isch&sa=1&ei=ZgA0XuCnGtPoxgOB17jYDw&q=rasen+fußball&oq=rasen+fußball&gs_l=img.3..0l4j0i8i30l3j0i24l3.2808.3583..3831...0.0..0.136.439.5j1......0....1..gws-wiz-img.OSQdassdS4s&ved=0ahUKEwjg8uvYz63nAhVTtHEKHYErDvsQ4dUDCAY&uact=5#imgrc=30pTokuOZiSgQM");}
 
