@@ -5,30 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
     <title>VfB Website</title>
 </head>
 
 <body>
-    <table>
-        <div>
-            <h1 id="ueberschrift1">Alle Spiele Übersicht</h1>
-        </div>
-        <table id="tabelle">
-        </table>
+    <div class="row">
+        <div 
+         class="column-Punkte" >
+        
 
-        <div>
-            <h1 class="ueberschrift">Punkte Übersicht</h1>
-            <div>
-                <p>Punkte bei Siegen</p>
-                <div id="PunkteBeiSiegen"></div>
-                <p>Punkte bei Unentschieden</p>
-                <div id="PunkteBiUnentschieden"></div>
-                <p>Punkte Insgesamt</p>
-                <div id="PunkteInsgesamt"></div>
+                <div style="background-color:blue">
+                <h1 class="ueberschrift">Punkte Übersicht</h1>
+                <div >
+                    <div id="PunkteBeiSiegen"></div>
+                    <p>Punkte bei Unentschieden</p>
+                    <div id="PunkteBiUnentschieden"></div>
+                    <p>Punkte Insgesamt</p>
+                    <div id="PunkteInsgesamt"></div>
+                </div>
             </div>
         </div>
 
+    <div align="center" class="center-column">
+    <!-- <table> -->
+
         <div>
+            <h1 id="ueberschrift1"> Alle Spiele Übersicht </h1>
+        </div>
+        <table id="tabelle">
+        </table>
+    </div>
+        
+        
+        <div class="column-Tore">
             <h1>Tore Übersicht</h1>
             <div>
                 <p>Tore bei Sieg</p>
@@ -41,10 +51,6 @@
                 <div id="ToreInsgesamt"></div>
             </div>
         </div>
-
-
-
-
     </div>
     <script src="./js/main.js">
     </script>

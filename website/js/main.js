@@ -20,6 +20,7 @@ let zaehler_fuer_vfb_spiele = 0
 
 let spiele = []
 
+
 function Spielresultate(spiel) {
     let MannschaftA = spiel['Team1']['TeamName']
     let MannschaftB = spiel['Team2']['TeamName']
@@ -34,45 +35,45 @@ function Spielresultate(spiel) {
         Tore_team2 = Ergebnis['ScoreTeam2']
     }
 
-    let team_name1 = spiel['Team1']['TeamName']
+    let team_name1 = spiel['Team1']['TeamName'] 
     let team_name2 = spiel['Team2']['TeamName']
 
 
-    if (team1_tore > team2_tore) {
-        if (team_name1 === "VfB Stuttgart") {
+    if (Tore_team1 > Tore_team2) {
+         if (team_name1 === "VfB Stuttgart") {
+            console.log("Sieg")
+            resultat = "Sieg" 
+        }
+    }
+
+    if (Tore_team1 < Tore_team2) {
+         if (team_name2 === "VfB Stuttgart") {
+            console.log("Sieg")
             resultat = "Sieg"
         }
     }
-
-    if (team1_tore < team2_tore) {
-        if (team_name2 === "VfB Stuttgart") {
-            resultat = "Sieg"
+    if (Tore_team1 === Tore_team2) {
+         if (team_name1 === "VfB Stuttgart") {
+             console.log("Unentschieden")
+             resultat = "Unentschieden" 
         }
     }
-
-
-    if (team1_tore === team2_tore) {
-        if (team_name1 === "VfB Stuttgart") {
-            resultat = "Unentschieden"
-        }
-    }
-
-    if (team1_tore === team2_tore) {
-        if (team_name2 === "VfB Stuttgart") {
+    if (Tore_team1 === Tore_team2) {
+         if (team_name2 === "VfB Stuttgart") {
             console.log("Unentschieden")
             resultat = "Unentschieden"
         }
     }
 
-    if (team1_tore < team2_tore) {
-        if (team_name1 === "VfB Stuttgart") {
+    if (Tore_team1 < Tore_team2) { 
+         if (team_name1 === "VfB Stuttgart") {
             console.log("Niederlage")
             resultat = "Niederlage"
         }
     }
 
-    if (team1_tore < team2_tore) {
-        if (team_name1 === "VfB Stuttgart") {
+    if (Tore_team1 > Tore_team2) {
+         if (team_name2 === "VfB Stuttgart") {
             console.log("Niederlage")
             resultat = "Niederlage"
         }
@@ -100,11 +101,12 @@ function mache_tabelle() {
 
 
     // über alle spiele iterieren
-    spiele.forEach(spiel => {
+    
+    
+   spiele.forEach(spiel => {
         const row = Spielresultate(spiel)
 
         tabelle = tabelle + " " + row
-
 
     })
 

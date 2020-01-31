@@ -1,0 +1,31 @@
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+    padding: 6%
+
+
+}
+.column-Punkte{
+    float: LEFT;
+    width: 13%;
+    padding-left: 15%; 
+    padding-top: 10%
+}
+.column-Tore{
+    float: left;
+    width: 13%;
+    padding: 10%;
+    padding-left: 0%; 
+}
+
+.center-column{
+    float: left;
+    width: 40%;
+    padding-top: 8%;
+
+}
+
+.demo1 { background-image: url("rzSwvNx80HcSgM");
+ }
+
